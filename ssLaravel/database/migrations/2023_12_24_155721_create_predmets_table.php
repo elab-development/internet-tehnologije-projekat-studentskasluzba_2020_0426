@@ -20,7 +20,7 @@ class CreatePredmetsTable extends Migration
             $table->integer('semestar');
 
             $table->foreignId('profesor_id')->constrained('profesors');
-            $table->enum('tip',['obavezni','izborni']);
+            $table->string('tip');
             $table->timestamps();
         });
     }

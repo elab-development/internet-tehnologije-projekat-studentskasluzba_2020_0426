@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ispit;
+use App\Models\Predmet;
+use App\Models\Profesor;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(3)->create();
+        Profesor::factory(5)->create();
+        Student::factory(20)->create();
+        Predmet::factory(10)->create();
+        Ispit::factory(3)->create();
     }
 }

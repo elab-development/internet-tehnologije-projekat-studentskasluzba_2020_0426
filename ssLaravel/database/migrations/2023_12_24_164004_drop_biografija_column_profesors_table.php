@@ -15,7 +15,7 @@ class DropBiografijaColumnProfesorsTable extends Migration
     {
         Schema::table('profesors', function (Blueprint $table) {
            
-            $table->removeColumn('biografija');
+            $table->dropColumn('biografija');
             
             
         });

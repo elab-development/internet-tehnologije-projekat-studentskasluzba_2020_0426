@@ -14,8 +14,8 @@ class RenameColumnsProfesorsTable extends Migration
     public function up()
     {
         Schema::table('profesors', function (Blueprint $table) {           
-            $table->renameColumna('prez','prezime');           
-            $table->renameColumna('password','lozinka');
+            $table->renameColumn('prez','prezime');           
+            $table->renameColumn('password','lozinka');
             
         });
     }
@@ -28,8 +28,8 @@ class RenameColumnsProfesorsTable extends Migration
     public function down()
     {
         Schema::table('profesors', function (Blueprint $table) {           
-            $table->renameColumna('prezime','prez');           
-            $table->renameColumna('lozinka','password');
+            $table->renameColumn('prezime','prez');           
+            $table->renameColumn('lozinka','password');
             
         });
     }
