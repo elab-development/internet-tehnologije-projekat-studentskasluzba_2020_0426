@@ -15,6 +15,12 @@ class CreatePredmetsTable extends Migration
     {
         Schema::create('predmets', function (Blueprint $table) {
             $table->id();
+            $table->string('naziv')->unique();  
+            $table->integer('esbp'); 
+            $table->integer('semestar');
+
+            $table->foreignId('profesor_id')->constrained('profesors');
+            $table->enum('tip',['obavezni','izborni']);
             $table->timestamps();
         });
     }
