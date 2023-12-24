@@ -16,7 +16,7 @@ class CreateProfesorsTable extends Migration
         Schema::create('profesors', function (Blueprint $table) {
             $table->id();
             $table->string('ime');
-            $table->string('prezime');
+            $table->string('prez');
             $table->string('email')->unique();          
             $table->string('password');
             $table->string('jmbg');
@@ -28,6 +28,7 @@ class CreateProfesorsTable extends Migration
             $table->string('konsultacije');
             $table->string('kabinet');
 
+            $table->text('biografija');
 
             $table->timestamps();
         });
