@@ -15,9 +15,6 @@ class CreateIspitsTable extends Migration
     {
         Schema::create('ispits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students');
-            $table->foreignId('predmet_id')->constrained('predmets');
-
             $table->date('datum');  
             $table->integer('ocena'); 
             $table->string('opisnaOcena'); 
