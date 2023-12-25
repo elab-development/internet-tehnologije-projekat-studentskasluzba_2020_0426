@@ -9,13 +9,13 @@ class Profesor extends User
 {
     use HasFactory;
     protected $fillable = [ 
-        // 'ime',
-        // 'prezime',
-        // 'email',
-        // 'password',
-        // 'jmbg',
-        // 'adresa',
-        // 'kontakt'
+        'ime',
+        'prezime',
+        'email',
+        'password',
+        'jmbg',
+        'adresa',
+        'kontakt',
         'titula', //docent, red. prof.
         'katedra',
         'kabinet',  //407a

@@ -9,13 +9,13 @@ class Student extends User
 {
     use HasFactory;
     protected $fillable = [ 
-        // 'ime',
-        // 'prezime',
-        // 'email',
-        // 'password',
-        // 'jmbg',
-        // 'adresa',
-        // 'kontakt'
+        'ime',
+        'prezime',
+        'email',
+        'password',
+        'jmbg',
+        'adresa',
+        'kontakt',
         'godina',
         'broj',
         'prosek',
