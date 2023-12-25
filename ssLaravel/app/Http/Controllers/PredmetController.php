@@ -1,85 +1,98 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PredmetResource;
 use App\Models\Predmet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PredmetController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return PredmetResource::collection(Predmet::all());
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required|string|max:255',
+            'esbp' => 'required|integer',
+            'semestar' => 'required|integer',
+            'profesor_id' => 'required|exists:profesors,id',
+            'tip' => 'required|string|in:obavezan,izborni',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        $predmet = Predmet::create($validator->validated());
+    
+        return new PredmetResource($predmet);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Predmet  $predmet
-     * @return \Illuminate\Http\Response
      */
-    public function show(Predmet $predmet)
+    public function show($id)
     {
-        //
-    }
+        $predmet = Predmet::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Predmet  $predmet
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Predmet $predmet)
-    {
-        //
+        if (!$predmet) {
+            return response()->json(['message' => 'Predmet not found'], 404);
+        }
+
+        return new PredmetResource($predmet);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Predmet  $predmet
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Predmet $predmet)
+    public function update(Request $request, $id)
     {
-        //
+        $predmet = Predmet::find($id);
+
+        if (!$predmet) {
+            return response()->json(['message' => 'Predmet not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'sometimes|required|string|max:255',
+            'esbp' => 'sometimes|required|integer',
+            'semestar' => 'sometimes|required|integer',
+            'profesor_id' => 'sometimes|required|exists:profesors,id',
+            'tip' => 'sometimes|required|string|in:obavezan,izborni',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        $predmet->update($validator->validated());
+    
+        return new PredmetResource($predmet);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Predmet  $predmet
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Predmet $predmet)
+    public function destroy($id)
     {
-        //
+        $predmet = Predmet::find($id);
+
+        if (!$predmet) {
+            return response()->json(['message' => 'Predmet not found'], 404);
+        }
+
+        $predmet->delete();
+
+        return response()->json(['message' => 'Predmet successfully deleted'], 200);
     }
 }

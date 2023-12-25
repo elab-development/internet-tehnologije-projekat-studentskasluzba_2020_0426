@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PredmetController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
@@ -27,3 +28,4 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/studenti',StudentController::class);
 Route::resource('/profesori',ProfesorController::class);
 
+Route::resource('/predmeti',PredmetController::class);
