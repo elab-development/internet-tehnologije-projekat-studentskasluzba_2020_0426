@@ -12,7 +12,7 @@ class Profesor extends User
         'ime',
         'prezime',
         'email',
-        'password',
+        'lozinka',
         'jmbg',
         'adresa',
         'kontakt',
