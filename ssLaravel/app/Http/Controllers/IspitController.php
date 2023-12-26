@@ -14,7 +14,8 @@ class IspitController extends Controller
      */
     public function index()
     {
-        return IspitResource::collection(Ispit::all());
+        $ispiti = Ispit::paginate(5);
+        return IspitResource::collection($ispiti);
     }
 
     /**

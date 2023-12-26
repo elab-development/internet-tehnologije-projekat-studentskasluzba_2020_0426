@@ -16,8 +16,9 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return StudentResource::collection(Student::all());
+    { 
+        $studenti = Student::paginate(5);
+        return StudentResource::collection($studenti);
     }
 
     /**

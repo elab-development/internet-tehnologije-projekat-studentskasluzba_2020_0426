@@ -13,8 +13,8 @@ class PredmetController extends Controller
      */
     public function index()
     {
-        //return Predmet::all();
-        return PredmetResource::collection(Predmet::all());
+         $predmeti = Predmet::paginate(5);
+        return PredmetResource::collection( $predmeti);
     }
 
     /**

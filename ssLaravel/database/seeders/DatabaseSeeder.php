@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         Profesor::factory(5)->create();
         Student::factory(20)->create();
         Predmet::factory(10)->create();
-        Ispit::factory(3)->create();
+        Ispit::factory(10)->create();
     }
 }

@@ -12,7 +12,8 @@ class ProfesorController extends Controller
 {
     public function index()
     {
-        return ProfesorResource::collection(Profesor::all());
+        $profesori = Profesor::paginate(5);
+        return ProfesorResource::collection( $profesori);
     }
     public function show($id)
     {
