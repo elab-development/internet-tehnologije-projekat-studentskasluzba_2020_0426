@@ -32,3 +32,7 @@ Route::resource('/profesori',ProfesorController::class);
 Route::resource('/predmeti',PredmetController::class);
 
 Route::resource('/ispiti',IspitController::class);
+
+Route::get('/ispiti/predmet/{predmet_id}',[IspitController::class,'ispitiPoPredmetu']);
+
+ 

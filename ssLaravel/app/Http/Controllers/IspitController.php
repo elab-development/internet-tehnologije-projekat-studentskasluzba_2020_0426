@@ -97,4 +97,24 @@ class IspitController extends Controller
 
         return response()->json(['message' => 'Ispit successfully deleted'], 200);
     }
+
+
+    public function ispitiPoPredmetu($predmet_id)
+    {
+        $ispiti = Ispit::where('predmet_id', $predmet_id)->get();
+
+        if ($ispiti->isEmpty()) {
+            return response()->json(['message' => 'Nema ni jedan ispit'], 404);
+        }
+
+        $prosecnaOcena = $ispiti->avg('ocena');
+
+        return response()->json([
+            'ispiti' => IspitResource::collection($ispiti),
+            'prosecnaOcena' => $prosecnaOcena
+        ]);
+    }
+
+
+    
 }
