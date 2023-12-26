@@ -115,6 +115,20 @@ class IspitController extends Controller
         ]);
     }
 
+    public function ispitiPoStudentu($student_id)
+    {
+        $ispiti = Ispit::where('student_id', $student_id)->get();
 
-    
+        if ($ispiti->isEmpty()) {
+            return response()->json(['message' => 'Nema ni jedan ispit'], 404);
+        }
+
+        $prosecnaOcena = $ispiti->avg('ocena');
+
+        return response()->json([
+            'ispiti' => IspitResource::collection($ispiti),
+            'prosecnaOcena' => $prosecnaOcena
+        ]);
+    }
+
 }

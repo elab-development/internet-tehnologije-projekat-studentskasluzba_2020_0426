@@ -34,5 +34,5 @@ Route::resource('/predmeti',PredmetController::class);
 Route::resource('/ispiti',IspitController::class);
 
 Route::get('/ispiti/predmet/{predmet_id}',[IspitController::class,'ispitiPoPredmetu']);
-
+Route::get('/ispiti/student/{student_id}',[IspitController::class,'ispitiPoStudentu']);
  
