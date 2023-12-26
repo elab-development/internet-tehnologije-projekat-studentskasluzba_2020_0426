@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IspitController;
 use App\Http\Controllers\PredmetController;
 use App\Http\Controllers\ProfesorController;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 // Route::delete('/studenti/{id}',[StudentController::class,'destroy']);
 // Route::put('/studenti/{id}',[StudentController::class,'update']);
 
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/ispiti/predmet/{predmet_id}',[IspitController::class,'ispitiPoPredmetu']);
 Route::get('/ispiti/student/{student_id}',[IspitController::class,'ispitiPoStudentu']);
@@ -39,4 +41,4 @@ Route::resource('/predmeti',PredmetController::class);
 Route::resource('/ispiti',IspitController::class);
 
 
- 
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
