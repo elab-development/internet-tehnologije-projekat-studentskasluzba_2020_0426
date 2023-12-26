@@ -13,6 +13,7 @@ class PredmetController extends Controller
      */
     public function index()
     {
+        //return Predmet::all();
         return PredmetResource::collection(Predmet::all());
     }
 
@@ -64,11 +65,11 @@ class PredmetController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'naziv' => 'sometimes|required|string|max:255',
-            'esbp' => 'sometimes|required|integer',
-            'semestar' => 'sometimes|required|integer',
-            'profesor_id' => 'sometimes|required|exists:profesors,id',
-            'tip' => 'sometimes|required|string|in:obavezan,izborni',
+            'naziv' => 'required|string|max:255',
+            'esbp' => 'required|integer',
+            'semestar' => 'required|integer',
+            'profesor_id' => 'required|exists:profesors,id',
+            'tip' => 'required|string|in:obavezan,izborni',
         ]);
     
         if ($validator->fails()) {

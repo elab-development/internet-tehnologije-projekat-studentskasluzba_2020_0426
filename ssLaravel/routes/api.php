@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IspitController;
 use App\Http\Controllers\PredmetController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\StudentController;
@@ -29,3 +30,5 @@ Route::resource('/studenti',StudentController::class);
 Route::resource('/profesori',ProfesorController::class);
 
 Route::resource('/predmeti',PredmetController::class);
+
+Route::resource('/ispiti',IspitController::class);

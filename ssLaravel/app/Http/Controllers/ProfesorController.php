@@ -45,7 +45,7 @@ class ProfesorController extends Controller
         }
     
         $profesorData = $validator->validated();
-        $profesorData['password'] = Hash::make($request->password);
+        $profesorData['lozinka'] = Hash::make($request->password);
     
         $profesor = new Profesor($profesorData);
         $profesor->save();
