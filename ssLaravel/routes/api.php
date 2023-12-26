@@ -26,6 +26,11 @@ use Illuminate\Support\Facades\Route;
 // Route::put('/studenti/{id}',[StudentController::class,'update']);
 
 
+Route::get('/ispiti/predmet/{predmet_id}',[IspitController::class,'ispitiPoPredmetu']);
+Route::get('/ispiti/student/{student_id}',[IspitController::class,'ispitiPoStudentu']);
+Route::get('/ispiti/rok',[IspitController::class,'ispitiPoRoku']);
+
+
 Route::resource('/studenti',StudentController::class);
 Route::resource('/profesori',ProfesorController::class);
 
@@ -33,6 +38,5 @@ Route::resource('/predmeti',PredmetController::class);
 
 Route::resource('/ispiti',IspitController::class);
 
-Route::get('/ispiti/predmet/{predmet_id}',[IspitController::class,'ispitiPoPredmetu']);
-Route::get('/ispiti/student/{student_id}',[IspitController::class,'ispitiPoStudentu']);
+
  

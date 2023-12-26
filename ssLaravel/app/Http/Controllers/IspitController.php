@@ -130,5 +130,15 @@ class IspitController extends Controller
             'prosecnaOcena' => $prosecnaOcena
         ]);
     }
-
+    public function ispitiPoRoku(Request $request)
+    {
+         
+        $pocetni_datum = $request->input('pocetni_datum');
+        $krajnji_datum = $request->input('krajnji_datum');
+    
+        $ispiti = Ispit::whereBetween('datum', [$pocetni_datum, $krajnji_datum])->get();
+    
+        return IspitResource::collection($ispiti);
+    }
+    
 }
