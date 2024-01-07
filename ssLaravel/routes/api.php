@@ -49,7 +49,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
- 
+Route::resource('/studenti', StudentController::class)->except(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     
@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/ispiti/rok', [IspitController::class, 'ispitiPoRoku']);
 
 
-    Route::resource('/studenti', StudentController::class)->except(['index', 'show']);
+  
     Route::resource('/profesori', ProfesorController::class)->except(['index', 'show']);
     Route::resource('/predmeti', PredmetController::class)->except(['index', 'show']);
     Route::resource('/ispiti', IspitController::class)->except(['index', 'show']);

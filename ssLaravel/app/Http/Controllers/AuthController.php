@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    
+    //kada radimo login moramo da prosledimo param. type kroz upit
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
         $userType = $request->input('type'); // tip korisnika (student ili profesor ili user)
-
+    
         switch ($userType) {
             case 'student':
                 $user = Student::where('email', $request->email)->first();
