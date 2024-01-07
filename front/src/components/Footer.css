@@ -6,6 +6,7 @@
     padding: 20px;
     background-color: var(--non-photo-blue);  
     color: var(--english-violet);  
+    width: 100%;
   }
   
   .footer-col {

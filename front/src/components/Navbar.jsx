@@ -10,6 +10,9 @@ function Navbar() {
     <nav className="navbar">
       <img src="https://fon.bg.ac.rs/wp-content/uploads/2023/10/FON-Logo.svg" alt="Logo FONA" className="navbar-logo" />
       <ul className="navbar-nav">
+      <li className="nav-item" onClick={() => navigate('/')}>
+          Pocetna
+        </li>
         <li className="nav-item" onClick={() => navigate('/login')}>
           Login
         </li>
