@@ -1,38 +1,40 @@
+ 
+:root {
+  --english-violet: #594157;
+  --ultra-violet: #726DA8;
+  --glaucous: #7D8CC4;
+  --non-photo-blue: #A0D2DB;
+  --mint-green: #BEE7E8;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-color: var(--mint-green);
+  color: var(--english-violet);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  font-family: Arial, sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header {
+  background-color: var(--non-photo-blue);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+  color: var(--ultra-violet);
+}
+
+p {
+  color: var(--glaucous);
+}
+.Fon-logo {
+  max-width: 200px; /* ili bilo koja druga veličina koja vam odgovara */
+  margin-bottom: 20px;
 }
