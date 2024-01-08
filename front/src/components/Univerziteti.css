@@ -1,0 +1,42 @@
+.univerziteti-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .univerzitet {
+    background-color: var(--mint-green); 
+    border: 1px solid var(--glaucous);  
+    padding: 15px;
+    margin: 10px;
+    width: calc(33% - 20px);  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    border-radius: 5px;  
+    text-align: center;
+  }
+  
+  .univerzitet h2 {
+    color: var(--ultra-violet);  
+  }
+  
+  .univerzitet p {
+    color: var(--english-violet);  
+  }
+  
+  .univerzitet a {
+    color: var(--non-photo-blue);  
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .univerzitet a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .univerzitet {
+      width: 100%;  
+    }
+  }
+  
