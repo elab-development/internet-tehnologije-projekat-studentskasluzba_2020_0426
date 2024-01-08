@@ -39,3 +39,17 @@
     cursor: default;
   }
   
+
+
+  .ispiti-summary {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: var(--non-photo-blue);  
+    color: var(--english-violet);  
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .ispiti-summary p {
+    margin: 5px 0;  
+  }
