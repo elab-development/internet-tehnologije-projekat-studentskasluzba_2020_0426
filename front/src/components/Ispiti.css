@@ -1,0 +1,41 @@
+.ispiti-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .ispiti-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ispiti-table th, .ispiti-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .ispiti-table th {
+    background-color: var(--ultra-violet);
+    color: white;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 10px 15px;
+    border: 1px solid var(--glaucous);
+    background-color: var(--non-photo-blue);
+    color: var(--english-violet);
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  
