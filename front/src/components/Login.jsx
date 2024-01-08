@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
  
 
-function Login() {
+function Login({setToken}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ function Login() {
        
       sessionStorage.setItem('token', response.data.access_token);
       sessionStorage.setItem('auth_id', response.data.user.id);
+      setToken(response.data.access_token)
       navigate('/ispiti');
     } catch (error) {
       console.error('Login error', error.response.data);
