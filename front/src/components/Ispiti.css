@@ -63,3 +63,24 @@
     border: 2px solid var(--glaucous);  
     border-radius: 5px;
   }
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top:50px;
+  }
+  
+  .controls button {
+    padding: 10px;
+    margin-left: 10px;
+   
+    cursor: pointer;
+    background-color: var(--non-photo-blue);
+    border: 1px solid var(--glaucous);
+    color: var(--english-violet);
+    border-radius: 5px;
+  }
+  
+  .controls button:hover {
+    background-color: var(--glaucous);
+  }

@@ -9,6 +9,8 @@ function Ispiti() {
   const [ukupnoESP, setUkupnoESP] = useState(0);
   const [prosecnaOcena, setProsecnaOcena] = useState(0);
   const [pretraga, setPretraga] = useState('');
+  const [sortirajPo, setSortirajPo] = useState(null);
+  const [sortSmer, setSortSmer] = useState('asc');
   useEffect(() => {
     const fetchIspiti = async () => {
       const authId = sessionStorage.getItem('auth_id'); //  ID ulogovanog studenta
@@ -39,7 +41,18 @@ function Ispiti() {
   
     fetchIspiti();
   }, []);
-  
+  const toggleSortSmer = () => {
+    setSortSmer(prevSortSmer => (prevSortSmer === 'asc' ? 'desc' : 'asc'));
+    setSortirajPo('ocena');  
+  };
+  useEffect(() => {
+    if (sortirajPo === 'ocena') {
+      setIspiti(prevIspiti => [...prevIspiti].sort((a, b) => {
+        return sortSmer === 'asc' ? a.ocena - b.ocena : b.ocena - a.ocena;
+      }));
+    }
+  }, [sortirajPo, sortSmer]);
+
   const filtriraniIspiti = ispit => {
     return (
       ispit.predmet.naziv.toLowerCase().includes(pretraga.toLowerCase()) ||
@@ -49,13 +62,18 @@ function Ispiti() {
   };
   return (
     <div className="ispiti-container">
-         <input
-        type="text"
-        className="search-input"
-        placeholder="Pretraži predmete ili profesore"
-        value={pretraga}
-        onChange={(e) => setPretraga(e.target.value)}
-      />
+         <div className="controls">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Pretraži predmete ili profesore"
+          value={pretraga}
+          onChange={(e) => setPretraga(e.target.value)}
+        />
+        <button onClick={toggleSortSmer}>
+          Sortiraj po oceni ({sortSmer === 'asc' ? 'rastuće' : 'opadajuće'})
+        </button>
+      </div>
       <table className="ispiti-table">
         <thead>
           <tr>
