@@ -6,37 +6,46 @@
   }
   
   .univerzitet {
-    background-color: var(--mint-green); 
-    border: 1px solid var(--glaucous);  
+    background-color: var(--mint-green);
+    border: 1px solid var(--glaucous);
     padding: 15px;
     margin: 10px;
-    width: calc(33% - 20px);  
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
-    border-radius: 5px;  
+    width: calc(25% - 20px);  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
     text-align: center;
   }
   
-  .univerzitet h2 {
-    color: var(--ultra-violet);  
-  }
+  /* Ostatak CSS-a ostaje isti */
   
-  .univerzitet p {
-    color: var(--english-violet);  
-  }
-  
-  .univerzitet a {
-    color: var(--non-photo-blue);  
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .univerzitet a:hover {
-    text-decoration: underline;
+  @media (max-width: 800px) {
+    .univerzitet {
+      width: calc(33% - 20px);  
+    }
   }
   
   @media (max-width: 600px) {
     .univerzitet {
-      width: 100%;  
+      width: 100%; 
     }
   }
   
+  .paginacija {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .paginacija button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: var(--non-photo-blue);
+    border: 1px solid var(--glaucous);
+    color: var(--english-violet);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .paginacija button:hover {
+    background-color: var(--glaucous);
+  }
