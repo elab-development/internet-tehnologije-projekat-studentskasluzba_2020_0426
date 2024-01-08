@@ -8,7 +8,7 @@ function Ispiti() {
   const [ispiti, setIspiti] = useState([]);
   const [ukupnoESP, setUkupnoESP] = useState(0);
   const [prosecnaOcena, setProsecnaOcena] = useState(0);
-
+  const [pretraga, setPretraga] = useState('');
   useEffect(() => {
     const fetchIspiti = async () => {
       const authId = sessionStorage.getItem('auth_id'); //  ID ulogovanog studenta
@@ -40,9 +40,22 @@ function Ispiti() {
     fetchIspiti();
   }, []);
   
-
+  const filtriraniIspiti = ispit => {
+    return (
+      ispit.predmet.naziv.toLowerCase().includes(pretraga.toLowerCase()) ||
+      ispit.predmet.profesor.ime.toLowerCase().includes(pretraga.toLowerCase()) ||
+      ispit.predmet.profesor.prezime.toLowerCase().includes(pretraga.toLowerCase())
+    );
+  };
   return (
     <div className="ispiti-container">
+         <input
+        type="text"
+        className="search-input"
+        placeholder="Pretraži predmete ili profesore"
+        value={pretraga}
+        onChange={(e) => setPretraga(e.target.value)}
+      />
       <table className="ispiti-table">
         <thead>
           <tr>
@@ -55,9 +68,9 @@ function Ispiti() {
           </tr>
         </thead>
         <tbody>
-          {ispiti.map((ispit) => (
-            <IspitRed key={ispit.id} ispit={ispit} />
-          ))}
+            {ispiti.filter(filtriraniIspiti).map((ispit) => (
+                <IspitRed key={ispit.id} ispit={ispit} />
+            ))}
         </tbody>
       </table>
       <div className="ispiti-summary">
