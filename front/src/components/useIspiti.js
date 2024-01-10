@@ -22,7 +22,7 @@ const useIspiti = (initialUrl) => {
         fetchData();
     }, [initialUrl]);
 
-    return [data, loading, error];
+    return [data, loading, error,setData];
 };
 
 export default useIspiti;

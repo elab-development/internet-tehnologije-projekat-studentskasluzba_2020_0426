@@ -11,8 +11,8 @@ function Ispiti() {
   const [pretraga, setPretraga] = useState('');
   const [sortirajPo, setSortirajPo] = useState(null);
   const [sortSmer, setSortSmer] = useState('asc');
-  const [ispiti, loading, error] = useIspiti('http://127.0.0.1:8000/api/ispiti');
- 
+  const [ispiti, loading, error,setIspiti] = useIspiti('http://127.0.0.1:8000/api/ispiti');
+  const [polozeniIspiti, setPolozeniIspiti] = useState();
   const toggleSortSmer = () => {
     setSortSmer(prevSortSmer => (prevSortSmer === 'asc' ? 'desc' : 'asc'));
     setSortirajPo('ocena');  
@@ -25,6 +25,22 @@ function Ispiti() {
     }
   }, [sortirajPo, sortSmer]);
 
+
+
+    useEffect(() => {
+      const studentId = sessionStorage.getItem('auth_id');
+      console.log(sessionStorage.getItem('auth_id'));
+      const polozeniIspitiStudenta = ispiti.filter(ispit => 
+        ispit.student.id == studentId && ispit.ocena > 5
+      );
+      const ispitiSaOcenomVecomOdPet = polozeniIspitiStudenta.filter(ispit => ispit.ocena > 5);
+      const ukupnoESP = ispitiSaOcenomVecomOdPet.reduce((total, ispit) => total + ispit.predmet.esbp, 0);
+      const prosecnaOcena = ispitiSaOcenomVecomOdPet.reduce((total, ispit) => total + ispit.ocena, 0) / ispitiSaOcenomVecomOdPet.length;
+
+      setUkupnoESP(ukupnoESP);
+      setProsecnaOcena(prosecnaOcena || 0); 
+      setPolozeniIspiti(polozeniIspitiStudenta)
+    }, [ispiti]);
   const filtriraniIspiti = ispit => {
     return (
       ispit.predmet.naziv.toLowerCase().includes(pretraga.toLowerCase()) ||
@@ -59,7 +75,7 @@ function Ispiti() {
           </tr>
         </thead>
         <tbody>
-            {ispiti.filter(filtriraniIspiti).map((ispit) => (
+            { polozeniIspiti && polozeniIspiti.filter(filtriraniIspiti).map((ispit) => (
                 <IspitRed key={ispit.id} ispit={ispit} />
             ))}
         </tbody>
