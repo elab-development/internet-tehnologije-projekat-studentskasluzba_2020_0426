@@ -1,0 +1,70 @@
+.univerziteti-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .univerzitet {
+    background-color: var(--mint-green);
+    border: 1px solid var(--glaucous);
+    padding: 15px;
+    margin: 10px;
+    width: calc(25% - 20px);  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    text-align: center;
+  }
+ 
+  
+  @media (max-width: 800px) {
+    .univerzitet {
+      width: calc(33% - 20px);  
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .univerzitet {
+      width: 100%; 
+    }
+  }
+  
+  .paginacija {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .paginacija button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: var(--non-photo-blue);
+    border: 1px solid var(--glaucous);
+    color: var(--english-violet);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .paginacija button:hover {
+    background-color: var(--glaucous);
+  }
+
+  .filteri {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.filteri button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: var(--non-photo-blue);
+    border: 1px solid var(--glaucous);
+    color: var(--english-violet);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filteri button:hover {
+    background-color: var(--glaucous);
+}

@@ -1,0 +1,78 @@
+ 
+:root {
+  --english-violet: #594157;
+  --ultra-violet: #726DA8;
+  --glaucous: #7D8CC4;
+  --non-photo-blue: #A0D2DB;
+  --mint-green: #BEE7E8;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--mint-green);
+  color: var(--english-violet);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  background-color: var(--non-photo-blue);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  color: var(--ultra-violet);
+}
+
+p {
+  color: var(--glaucous);
+}
+.Fon-logo {
+  max-width: 200px; /* ili bilo koja druga veličina koja vam odgovara */
+  margin-bottom: 20px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-button {
+  padding: 10px 20px;
+  background-color: var(--non-photo-blue); /* Iz vaše palete boja */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: var(--glaucous); /* Iz vaše palete boja */
+}
