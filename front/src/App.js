@@ -9,6 +9,7 @@ import Ispiti from './components/Ispiti';
 import { useState } from 'react';
 import Univerziteti from './components/Univerziteti';
 import Profesor from './components/Profesor';
+import PredmetDetalji from './components/PredmetDetalji';
 function App() {
 
   const [token,setToken] = useState(null);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login  setToken={setToken}/>} />
           <Route path="/ispiti" element={<Ispiti />} />
+          <Route path="/profesor/predmet/:id" element={<PredmetDetalji />} />
           <Route path="/profesor" element={<Profesor />} />
           <Route path="/univerziteti" element={<Univerziteti />} />
         </Routes>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Profesor() {
   const [predmeti, setPredmeti] = useState([]);
@@ -26,7 +27,12 @@ function Profesor() {
 
     fetchPredmeti();
   }, []);
+    const navigate = useNavigate();
 
+    const handleDetaljiClick = (predmetId) => {
+        navigate(`/profesor/predmet/${predmetId}`);
+    };
+  
   if (loading) {
     return <p>Učitavanje...</p>;
   }
@@ -38,22 +44,20 @@ function Profesor() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Naziv</th>
-            <th>ESBP</th>
-            <th>Semestar</th>
-            <th>Tip</th>
+            <th>Naziv</th> 
+            <th>Akcije</th>
           </tr>
         </thead>
         <tbody>
-          {predmeti.map((predmet) => (
-            <tr key={predmet.id}>
-              <td>{predmet.id}</td>
-              <td>{predmet.naziv}</td>
-              <td>{predmet.esbp}</td>
-              <td>{predmet.semestar}</td>
-              <td>{predmet.tip}</td>
-            </tr>
-          ))}
+        {predmeti.map((predmet) => (
+        <tr key={predmet.id}>
+            <td>{predmet.id}</td>
+            <td>{predmet.naziv}</td> 
+            <td>
+            <button onClick={() => handleDetaljiClick(predmet.id)}>Detalji</button>
+            </td>
+        </tr>
+        ))}
         </tbody>
       </table>
     </div>
