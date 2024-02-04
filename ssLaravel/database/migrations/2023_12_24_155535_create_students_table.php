@@ -26,7 +26,8 @@ class CreateStudentsTable extends Migration
             $table->integer('broj');
             $table->double('prosek',8,2);
             $table->integer('esbp');
-
+            $table->string('upis'); //skolska godina kad je student upisan
+            $table->integer('trenutnaGodina');//prva druga..
             $table->timestamps();
         });
     }

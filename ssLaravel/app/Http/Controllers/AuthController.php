@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Student;
@@ -68,7 +69,22 @@ class AuthController extends Controller
 
         return null;
     }
-
+    public function getUser() //metoda vraca trenutno ulogovanog korisnika
+    {
+        $user = Auth::guard($this->getGuard())->user();
+    
+        if ($user) {
+            if ($user instanceof Student) {
+                // Ako je ulogovani korisnik student, koristi StudentResource za formatiranje odgovora
+                return new StudentResource($user);
+            } else {
+                // Inače, vratite korisnika bez resursa (možete koristiti UserResource ako ga imate)
+                return $user;
+            }
+        }
+    
+        return response()->json(['message' => 'User not found'], 404);
+    }
 
 
 

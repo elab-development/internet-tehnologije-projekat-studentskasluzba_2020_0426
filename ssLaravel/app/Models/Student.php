@@ -20,6 +20,9 @@ class Student extends User
         'broj',
         'prosek',
         'esbp',
+        'upis', // skolska godina kada se student upisao u trenutnu godinu (npr 2018/19 sam ja upisala prvu godinu)
+        'trenutnaGodina' //1,2,3,4 
+        
        
     ];
     public function ispiti()   {

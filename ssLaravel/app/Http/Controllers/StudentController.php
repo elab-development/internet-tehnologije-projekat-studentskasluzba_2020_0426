@@ -50,7 +50,9 @@ class StudentController extends Controller
             'godina' => 'required|integer|min:1',
             'broj' => 'required|string|unique:students',
             'prosek' => 'required|numeric|between:6,10',
-            'esbp' => 'required|integer',
+            'esbp' => 'required|integer', 
+            'trenutnaGodina' => 'required|numeric|between:1,4',
+            'upis' => 'required|string',
         ]);
     
         if ($validator->fails()) {
@@ -108,6 +110,8 @@ class StudentController extends Controller
             'broj' => 'required|string',
             'prosek' => 'required|numeric|between:6,10',
             'esbp' => 'required|integer',
+            'trenutnaGodina' => 'required|numeric|between:1,4',
+            'upis' => 'required|string',
         ]);
     
         if ($validator->fails()) {

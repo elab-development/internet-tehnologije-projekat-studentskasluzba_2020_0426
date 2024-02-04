@@ -3,11 +3,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Login({ setToken }) {
-  const [email, setEmail] = useState('von.bailey@example.org');
+  const [email, setEmail] = useState('ardella.medhurst@example.net');
   const [password, setPassword] = useState('password');
   const [userType, setUserType] = useState('student'); // Dodato smo polje za izbor uloge
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {

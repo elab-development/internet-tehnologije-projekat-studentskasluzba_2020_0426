@@ -26,6 +26,9 @@ class StudentResource extends JsonResource
             'broj' => $this->broj,
             'prosek' => $this->prosek,
             'esbp' => $this->esbp,
+            'upis' => $this->upis,
+            'trenutnaGodina' => $this->trenutnaGodina,
+
            
         ];
     }
