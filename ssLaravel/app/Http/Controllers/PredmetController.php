@@ -110,4 +110,28 @@ class PredmetController extends Controller
 
         return response()->json(['message' => 'Predmet successfully deleted'], 200);
     }
+    public function statistike($id)
+    {
+        $predmet = Predmet::find($id);
+    
+        if (!$predmet) {
+            return response()->json(['message' => 'Predmet not found'], 404);
+        }
+    
+        // Ocene koje želite da pratite (5 do 10)
+        $ocene = range(5, 10);
+    
+        // Inicijalizujte niz za statistike
+        $statistike = [];
+    
+        // Iterirajte kroz ocene i za svaku ocenu pronađite broj studenata koji su je dobili
+        foreach ($ocene as $ocena) {
+            $brojStudenata = $predmet->ispiti()->where('ocena', $ocena)->count();
+            $statistike[$ocena] = $brojStudenata;
+        }
+    
+        return response()->json(['statistike' => $statistike]);
+    }
+    
+    
 }

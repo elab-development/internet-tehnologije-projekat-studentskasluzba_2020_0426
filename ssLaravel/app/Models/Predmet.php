@@ -20,6 +20,8 @@ class Predmet extends Model
     public function profesor()   {
         return $this->belongsTo(Profesor::class);
     }
-
+    public function ispiti() {
+        return $this->hasMany(Ispit::class);
+    }
 
 }
