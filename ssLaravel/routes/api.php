@@ -64,7 +64,7 @@ Route::resource('/ispiti', IspitController::class)->except(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/ispiti/student', [IspitController::class, 'ispitiPoStudentu']);
-    
+    Route::get('/predmeti/profesor', [PredmetController::class, 'sviPredmetiUlogovanogProfesora']);
     Route::resource('/studenti', StudentController::class)->only(['index', 'show']);
     Route::resource('/profesori', ProfesorController::class)->only(['index', 'show']);
     Route::resource('/predmeti', PredmetController::class)->only(['index', 'show']);

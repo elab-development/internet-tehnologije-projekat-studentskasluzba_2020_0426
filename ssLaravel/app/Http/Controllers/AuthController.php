@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
         $userType = $request->input('type'); // tip korisnika (student ili profesor ili user)
-    
+      
         switch ($userType) {
             case 'student':
                 $user = Student::where('email', $request->email)->first();

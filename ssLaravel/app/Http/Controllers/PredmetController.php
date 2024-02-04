@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PredmetResource;
 use App\Models\Predmet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PredmetController extends Controller
@@ -16,7 +17,20 @@ class PredmetController extends Controller
          $predmeti = Predmet::paginate(5);
         return PredmetResource::collection( $predmeti);
     }
-
+    public function sviPredmetiUlogovanogProfesora()
+    {
+        $profesor = Auth::user();
+    
+        if (!$profesor) {
+            return response()->json(['message' => 'Niste ulogovani kao profesor.'], 401);
+        }
+    
+        $predmeti = Predmet::where('profesor_id', $profesor->id)->get();
+        return PredmetResource::collection($predmeti->map(function ($predmet) {
+            return new PredmetResource($predmet);
+        }));
+    }
+    
     /**
      * Store a newly created resource in storage.
      */

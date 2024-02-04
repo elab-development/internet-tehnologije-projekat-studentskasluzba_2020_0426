@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Ispiti from './components/Ispiti';
 import { useState } from 'react';
 import Univerziteti from './components/Univerziteti';
+import Profesor from './components/Profesor';
 function App() {
 
   const [token,setToken] = useState(null);
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login  setToken={setToken}/>} />
           <Route path="/ispiti" element={<Ispiti />} />
+          <Route path="/profesor" element={<Profesor />} />
           <Route path="/univerziteti" element={<Univerziteti />} />
         </Routes>
         <Footer></Footer>
