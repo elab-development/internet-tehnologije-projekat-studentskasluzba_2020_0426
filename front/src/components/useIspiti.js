@@ -10,14 +10,22 @@ const useIspiti = (initialUrl) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(initialUrl);
-                setData(response.data.data);  
+                const token = sessionStorage.getItem('token'); 
+                const headers = {
+                    'Authorization': `Bearer ${token}`,  
+                };
+        
+                const response = await axios.get(initialUrl, { headers });
+                console.log(response.data)
+                setData(response.data.ispiti); 
+                console.log(response.data.data.ispiti)
             } catch (error) {
                 setError(error);
             } finally {
                 setLoading(false);
             }
         };
+        
 
         fetchData();
     }, [initialUrl]);

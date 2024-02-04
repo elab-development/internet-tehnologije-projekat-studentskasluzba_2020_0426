@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\IspitResource;
 use App\Models\Ispit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class IspitController extends Controller
@@ -115,16 +116,23 @@ class IspitController extends Controller
         ]);
     }
 
-    public function ispitiPoStudentu($student_id)
+    public function ispitiPoStudentu()  //prepravljena metoda da uzima id od ulogovanog korisnika
     {
+        $user = Auth::user();
+    
+        if (!$user) {
+            return response()->json(['message' => 'Niste ulogovani.'], 401);
+        }
+    
+        $student_id = $user->id;
         $ispiti = Ispit::where('student_id', $student_id)->get();
-
+    
         if ($ispiti->isEmpty()) {
             return response()->json(['message' => 'Nema ni jedan ispit'], 404);
         }
-
+    
         $prosecnaOcena = $ispiti->avg('ocena');
-
+    
         return response()->json([
             'ispiti' => IspitResource::collection($ispiti),
             'prosecnaOcena' => $prosecnaOcena

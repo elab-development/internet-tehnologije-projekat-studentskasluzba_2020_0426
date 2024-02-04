@@ -11,7 +11,7 @@ function Ispiti() {
   const [pretraga, setPretraga] = useState('');
   const [sortirajPo, setSortirajPo] = useState(null);
   const [sortSmer, setSortSmer] = useState('asc');
-  const [ispiti, loading, error,setIspiti] = useIspiti('http://127.0.0.1:8000/api/ispiti');
+  const [ispiti, loading, error,setIspiti] = useIspiti('http://127.0.0.1:8000/api/ispiti/student');
   const [polozeniIspiti, setPolozeniIspiti] = useState();
   const toggleSortSmer = () => {
     setSortSmer(prevSortSmer => (prevSortSmer === 'asc' ? 'desc' : 'asc'));
@@ -29,9 +29,8 @@ function Ispiti() {
 
     useEffect(() => {
       const studentId = sessionStorage.getItem('auth_id');
-     
-      const polozeniIspitiStudenta = ispiti.filter(ispit => 
-        parseInt(ispit.student.id, 10) == parseInt(studentId) && ispit.ocena > 5
+     console.log(ispiti);
+      const polozeniIspitiStudenta = ispiti.filter(ispit =>  ispit.ocena > 5
       );
       console.log(polozeniIspitiStudenta)
       const ispitiSaOcenomVecomOdPet = polozeniIspitiStudenta.filter(ispit => ispit.ocena > 5);

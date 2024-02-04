@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
  
 
 function Login({setToken}) {
-  const [email, setEmail] = useState('');  
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('nicolas.imelda@example.com');  
+  const [password, setPassword] = useState('password');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
