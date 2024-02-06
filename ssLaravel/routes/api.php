@@ -50,7 +50,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::resource('/studenti', StudentController::class)->except(['index', 'show']);
+Route::resource('/studenti', StudentController::class)->only(['index', 'show']);
 
 
 Route::get('/ispiti/predmet/{predmet_id}', [IspitController::class, 'ispitiPoPredmetu']);
@@ -58,18 +58,18 @@ Route::get('/ispiti/predmet/{predmet_id}', [IspitController::class, 'ispitiPoPre
 Route::get('/ispiti/rok', [IspitController::class, 'ispitiPoRoku']);
 
 
-Route::resource('/profesori', ProfesorController::class)->except(['index', 'show']);
-Route::resource('/predmeti', PredmetController::class)->except(['index', 'show']);
-Route::resource('/ispiti', IspitController::class)->except(['index', 'show']);
+Route::resource('/profesori', ProfesorController::class)->only(['index', 'show']);
+Route::resource('/predmeti', PredmetController::class)->only(['index', 'show']);
+Route::resource('/ispiti', IspitController::class)->only(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/ispiti/student', [IspitController::class, 'ispitiPoStudentu']);
     Route::get('/predmeti/profesor', [PredmetController::class, 'sviPredmetiUlogovanogProfesora']);
-    Route::resource('/studenti', StudentController::class)->only(['index', 'show']);
-    Route::resource('/profesori', ProfesorController::class)->only(['index', 'show']);
-    Route::resource('/predmeti', PredmetController::class)->only(['index', 'show']);
-    Route::resource('/ispiti', IspitController::class)->only(['index', 'show']);
+    Route::resource('/studenti', StudentController::class)->except(['index', 'show']);
+    Route::resource('/profesori', ProfesorController::class)->except(['index', 'show']);
+    Route::resource('/predmeti', PredmetController::class);
+    Route::resource('/ispiti', IspitController::class)->except(['index', 'show']);
 
     Route::get('/predmeti/statistike/{id}', [PredmetController::class, 'statistike']);
 

@@ -40,7 +40,6 @@ class PredmetController extends Controller
             'naziv' => 'required|string|max:255',
             'esbp' => 'required|integer',
             'semestar' => 'required|integer',
-            'profesor_id' => 'required|exists:profesors,id',
             'tip' => 'required|string|in:obavezan,izborni',
         ]);
     
@@ -48,7 +47,20 @@ class PredmetController extends Controller
             return response()->json($validator->errors(), 422);
         }
     
-        $predmet = Predmet::create($validator->validated());
+        // Dohvatite trenutno ulogovanog profesora
+        $profesor = Auth::user();
+    
+        // Proverite da li je ulogovani korisnik profesor
+        if (!$profesor) {
+            return response()->json(['message' => 'Niste ulogovani kao profesor.'], 401);
+        }
+    
+        // Dodajte profesor_id na validirane podatke
+        $validatedData = $validator->validated();
+        $validatedData['profesor_id'] = $profesor->id;
+    
+        // Kreirajte predmet sa dodatnim profesor_id
+        $predmet = Predmet::create($validatedData);
     
         return new PredmetResource($predmet);
     }

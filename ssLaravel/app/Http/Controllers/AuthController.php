@@ -27,7 +27,7 @@ class AuthController extends Controller
                 $user = Profesor::where('email', $request->email)->first();
                 $guard = 'profesor';
                 break;
-            case 'sluzbenik':   
+            case 'user':   
                     $user = User::where('email', $request->email)->first();
                     $guard = 'user';
                     break;
