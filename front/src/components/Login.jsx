@@ -27,7 +27,7 @@ function Login({ setToken }) {
         navigate('/ispiti');
       } else if (userType === 'profesor') {
         navigate('/profesor');
-      }
+      } 
     } catch (error) {
       console.error('Login error', error.response.data);
       alert(error.response.data.message || 'Došlo je do greške prilikom prijave.');
@@ -66,7 +66,7 @@ function Login({ setToken }) {
             className="login-input"
           >
             <option value="student">Student</option>
-            <option value="profesor">Profesor</option>
+            <option value="profesor">Profesor</option> 
           </select>
         </label>
 
