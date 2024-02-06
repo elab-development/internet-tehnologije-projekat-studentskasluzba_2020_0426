@@ -81,20 +81,20 @@ class PredmetController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
+     */ 
+
     public function update(Request $request, $id)
     {
         $predmet = Predmet::find($id);
-
+    
         if (!$predmet) {
             return response()->json(['message' => 'Predmet not found'], 404);
         }
-
+    
         $validator = Validator::make($request->all(), [
             'naziv' => 'required|string|max:255',
             'esbp' => 'required|integer',
             'semestar' => 'required|integer',
-            'profesor_id' => 'required|exists:profesors,id',
             'tip' => 'required|string|in:obavezan,izborni',
         ]);
     
@@ -102,10 +102,17 @@ class PredmetController extends Controller
             return response()->json($validator->errors(), 422);
         }
     
-        $predmet->update($validator->validated());
+        // Pomoću Auth funkcije dobijamo trenutnog ulogovanog korisnika
+        $korisnik = Auth::user();
+        
+        // Postavljamo id ulogovanog korisnika kao profesor_id
+        $request->merge(['profesor_id' => $korisnik->id]);
+    
+        $predmet->update($request->only(['naziv', 'esbp', 'semestar', 'tip', 'profesor_id']));
     
         return new PredmetResource($predmet);
     }
+    
 
     /**
      * Remove the specified resource from storage.

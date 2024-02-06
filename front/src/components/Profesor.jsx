@@ -11,7 +11,9 @@ function Profesor() {
     semestar: '',
     tip: 'obavezan',
   });
-  const [isFormOpen, setIsFormOpen] = useState(false); // Dodato stanje za otvaranje/zatvaranje modala
+  const [isFormOpen, setIsFormOpen] = useState(false);  
+  const [selectedPredmetId, setSelectedPredmetId] = useState(null);  
+
   useEffect(() => {
     const fetchPredmeti = async () => {
       try {
@@ -21,6 +23,7 @@ function Profesor() {
         };
         const response = await axios.get('http://127.0.0.1:8000/api/predmeti/profesor', { headers });
         setPredmeti(response.data.data);
+        console.log(response.data.data);
         setLoading(false);
       } catch (error) {
         console.error('Greška prilikom dobijanja predmeta:', error);
@@ -50,6 +53,71 @@ function Profesor() {
       console.error('Greška prilikom brisanja predmeta:', error);
     }
   };
+
+  const handleEditClick = (predmetId) => {
+    // Pronađi predmet koji se uređuje
+    const selectedPredmet = predmeti.find((predmet) => predmet.id === predmetId);
+    
+    // Postavi izabrani predmet u formu za uređivanje
+    setFormData({
+      naziv: selectedPredmet.naziv,
+      esbp: selectedPredmet.esbp,
+      semestar: selectedPredmet.semestar,
+      tip: selectedPredmet.tip,
+    });
+
+    setSelectedPredmetId(predmetId);
+    setIsFormOpen(true);
+  };
+
+  const handleCancelEdit = () => {
+    // Poništava uređivanje i resetuje formu
+    setFormData({
+      naziv: '',
+      esbp: '',
+      semestar: '',
+      tip: 'obavezan',
+    });
+    setSelectedPredmetId(null);
+    setIsFormOpen(false);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+
+      // Napravi put zahtev za ažuriranje predmeta
+      await axios.put(`http://127.0.0.1:8000/api/predmeti/${selectedPredmetId}`, formData, { headers });
+
+      // Ažuriraj predmete nakon uspešnog ažuriranja
+      const updatedPredmeti = predmeti.map((predmet) => {
+        if (predmet.id === selectedPredmetId) {
+          return {
+            ...predmet,
+            ...formData,
+          };
+        }
+        return predmet;
+      });
+
+      setPredmeti(updatedPredmeti);
+
+      // Resetuj formu i zatvori modal
+      setFormData({
+        naziv: '',
+        esbp: '',
+        semestar: '',
+        tip: 'obavezan',
+      });
+      setSelectedPredmetId(null);
+      setIsFormOpen(false);
+    } catch (error) {
+      console.error('Greška prilikom ažuriranja predmeta:', error);
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -57,31 +125,30 @@ function Profesor() {
       [name]: value,
     });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = sessionStorage.getItem('token');
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-      };
-      console.log(formData);
-      const response = await axios.post('http://127.0.0.1:8000/api/predmeti', formData, { headers });
-      setPredmeti([...predmeti, response.data.data]);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const token = sessionStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+        };
+        console.log(formData);
+        const response = await axios.post('http://127.0.0.1:8000/api/predmeti', formData, { headers });
+        setPredmeti([...predmeti, response.data.data]);
 
-      setFormData({
-        naziv: '',
-        esbp: '',
-        semestar: '',
-        tip: 'obavezan',
-      });
+        setFormData({
+          naziv: '',
+          esbp: '',
+          semestar: '',
+          tip: 'obavezan',
+        });
 
-      // Zatvaranje modala nakon dodavanja predmeta
-      setIsFormOpen(false);
-    } catch (error) {
-      console.error('Greška prilikom dodavanja predmeta:', error);
-    }
-  };
-
+        // Zatvaranje modala nakon dodavanja predmeta
+        setIsFormOpen(false);
+      } catch (error) {
+        console.error('Greška prilikom dodavanja predmeta:', error);
+      }
+    };
   if (loading) {
     return <p>Učitavanje...</p>;
   }
@@ -112,7 +179,14 @@ function Profesor() {
                 <option value="izborni">Izborni</option>
               </select>
             </div>
-            <button type="submit">Dodaj predmet</button>
+            {selectedPredmetId ? (
+              <div>
+                <button type="button" onClick={handleUpdate}>Ažuriraj predmet</button>
+                <button type="button" onClick={handleCancelEdit}>Otkaži</button>
+              </div>
+            ) : (
+              <button type="submit">Dodaj predmet</button>
+            )}
             <button type="button" onClick={() => setIsFormOpen(false)}>Zatvori</button> {/* Dugme za zatvaranje modala */}
           </form>
         </div>
@@ -135,6 +209,7 @@ function Profesor() {
               <td>{predmet.naziv}</td>
               <td>
                 <button onClick={() => handleDetaljiClick(predmet.id)}>Detalji</button>
+                <button onClick={() => handleEditClick(predmet.id)}>Uredi</button> 
               </td>
               <td>
                 <button onClick={() => handleDeleteClick(predmet.id)}>Obriši</button>
