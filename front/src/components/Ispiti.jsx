@@ -15,7 +15,7 @@ function Ispiti() {
   const [sortSmer, setSortSmer] = useState('asc');
   const [ispiti, loading, error,setIspiti] = useIspiti('http://127.0.0.1:8000/api/ispiti/student');
   const [polozeniIspiti, setPolozeniIspiti] = useState();
-  const [studentPodaci, setStudentPodaci] = useState(null);  //potrebno za generisanje potvrde o redovnom studiranju
+  const [studentPodaci, setStudentPodaci] = useState(JSON.parse(sessionStorage.getItem('user')));  //potrebno za generisanje potvrde o redovnom studiranju
   const toggleSortSmer = () => {
     setSortSmer(prevSortSmer => (prevSortSmer === 'asc' ? 'desc' : 'asc'));
     setSortirajPo('ocena');  
@@ -51,9 +51,7 @@ function Ispiti() {
       ispit.predmet.profesor.prezime.toLowerCase().includes(pretraga.toLowerCase())
     );
   };
-  useEffect(() => {
-      setStudentPodaci(ispiti[0].student)
-  }, []);
+ 
 
   // Funkcija za konverziju broja godine u string
   const getGodinaString = (godina) => {

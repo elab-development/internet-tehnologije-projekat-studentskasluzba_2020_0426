@@ -35,6 +35,9 @@ function Navbar({token,setToken}) {
             <li className="nav-item" onClick={() => navigate('/')}>
               Pocetna
             </li>
+            <li className="nav-item" onClick={() => navigate('/kviz')}>
+              Kviz
+            </li>
             <li className="nav-item" onClick={() => navigate('/univerziteti')}>
               Univerziteti
             </li>

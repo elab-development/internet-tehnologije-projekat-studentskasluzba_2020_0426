@@ -18,6 +18,8 @@ function Login({ setToken }) {
       console.log(response);
       sessionStorage.setItem('token', response.data.access_token);
       sessionStorage.setItem('auth_id', response.data.user.id);
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+
       setToken(response.data.access_token);
 
       // Usmeravanje korisnika u zavisnosti od uloge

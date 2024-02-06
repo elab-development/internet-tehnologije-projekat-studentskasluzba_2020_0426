@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Univerziteti from './components/Univerziteti';
 import Profesor from './components/Profesor';
 import PredmetDetalji from './components/PredmetDetalji';
+import Kviz from './components/Kviz';
 function App() {
 
   const [token,setToken] = useState(null);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/profesor/predmet/:id" element={<PredmetDetalji />} />
           <Route path="/profesor" element={<Profesor />} />
           <Route path="/univerziteti" element={<Univerziteti />} />
+          <Route path="/kviz" element={<Kviz />} />
         </Routes>
         <Footer></Footer>
       </div>
