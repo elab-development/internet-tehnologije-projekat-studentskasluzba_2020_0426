@@ -11,8 +11,19 @@ function Profesor() {
     semestar: '',
     tip: 'obavezan',
   });
-  const [isFormOpen, setIsFormOpen] = useState(false);  
-  const [selectedPredmetId, setSelectedPredmetId] = useState(null);  
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedPredmetId, setSelectedPredmetId] = useState(null);
+  const [isGradeModalOpen, setIsGradeModalOpen] = useState(false);
+  const [students, setStudents] = useState([]);
+  const [selectedPredmetForGrade, setSelectedPredmetForGrade] = useState(null); // Updated state
+
+  const [gradeFormData, setGradeFormData] = useState({
+    student_id: '',
+    predmet_id: '',
+    datum: '',
+    ocena: '',
+    opisnaOcena: '',
+  });
 
   useEffect(() => {
     const fetchPredmeti = async () => {
@@ -23,7 +34,6 @@ function Profesor() {
         };
         const response = await axios.get('http://127.0.0.1:8000/api/predmeti/profesor', { headers });
         setPredmeti(response.data.data);
-        console.log(response.data.data);
         setLoading(false);
       } catch (error) {
         console.error('Greška prilikom dobijanja predmeta:', error);
@@ -55,10 +65,8 @@ function Profesor() {
   };
 
   const handleEditClick = (predmetId) => {
-    // Pronađi predmet koji se uređuje
     const selectedPredmet = predmeti.find((predmet) => predmet.id === predmetId);
-    
-    // Postavi izabrani predmet u formu za uređivanje
+
     setFormData({
       naziv: selectedPredmet.naziv,
       esbp: selectedPredmet.esbp,
@@ -71,7 +79,6 @@ function Profesor() {
   };
 
   const handleCancelEdit = () => {
-    // Poništava uređivanje i resetuje formu
     setFormData({
       naziv: '',
       esbp: '',
@@ -89,10 +96,8 @@ function Profesor() {
         'Authorization': `Bearer ${token}`,
       };
 
-      // Napravi put zahtev za ažuriranje predmeta
       await axios.put(`http://127.0.0.1:8000/api/predmeti/${selectedPredmetId}`, formData, { headers });
 
-      // Ažuriraj predmete nakon uspešnog ažuriranja
       const updatedPredmeti = predmeti.map((predmet) => {
         if (predmet.id === selectedPredmetId) {
           return {
@@ -105,7 +110,6 @@ function Profesor() {
 
       setPredmeti(updatedPredmeti);
 
-      // Resetuj formu i zatvori modal
       setFormData({
         naziv: '',
         esbp: '',
@@ -118,6 +122,7 @@ function Profesor() {
       console.error('Greška prilikom ažuriranja predmeta:', error);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -125,38 +130,97 @@ function Profesor() {
       [name]: value,
     });
   };
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        const token = sessionStorage.getItem('token');
-        const headers = {
-          'Authorization': `Bearer ${token}`,
-        };
-        console.log(formData);
-        const response = await axios.post('http://127.0.0.1:8000/api/predmeti', formData, { headers });
-        setPredmeti([...predmeti, response.data.data]);
 
-        setFormData({
-          naziv: '',
-          esbp: '',
-          semestar: '',
-          tip: 'obavezan',
-        });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = sessionStorage.getItem('token');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      const response = await axios.post('http://127.0.0.1:8000/api/predmeti', formData, { headers });
+      setPredmeti([...predmeti, response.data.data]);
 
-        // Zatvaranje modala nakon dodavanja predmeta
-        setIsFormOpen(false);
-      } catch (error) {
-        console.error('Greška prilikom dodavanja predmeta:', error);
-      }
-    };
+      setFormData({
+        naziv: '',
+        esbp: '',
+        semestar: '',
+        tip: 'obavezan',
+      });
+
+      setIsFormOpen(false);
+    } catch (error) {
+      console.error('Greška prilikom dodavanja predmeta:', error);
+    }
+  };
+
+  const fetchStudents = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      const response = await axios.get('http://127.0.0.1:8000/api/studenti', { headers });
+      setStudents(response.data.data);
+    } catch (error) {
+      console.error('Greška prilikom dobijanja studenata:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+
+  const openGradeModal = (predmetId) => {
+    setSelectedPredmetForGrade(predmetId);  
+    setIsGradeModalOpen(true);
+  };
+
+
+  const handleSubmitGrade = async (e) => {
+    e.preventDefault();
+    try {
+      const token = sessionStorage.getItem('token');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+      };
+      gradeFormData.predmet_id=selectedPredmetForGrade;
+      console.log(selectedPredmetForGrade)
+      const response = await axios.post('http://127.0.0.1:8000/api/ispiti', gradeFormData, { headers });
+      console.log(response)
+      // Handle successful submission (you can update UI or close the modal here)
+
+      setGradeFormData({
+        student_id: '',
+        predmet_id: '',
+        datum: '',
+        ocena: '',
+        opisnaOcena: '',
+      });
+      setSelectedPredmetId('');
+      setIsGradeModalOpen(false);
+    } catch (error) {
+      console.error('Greška prilikom unosa ocene:', error);
+    }
+  };
+
+  const handleGradeFormChange = (e) => {
+    const { name, value } = e.target;
+    setGradeFormData({
+      ...gradeFormData,
+      [name]: value,
+    });
+  };
+
   if (loading) {
     return <p>Učitavanje...</p>;
   }
 
   return (
     <div className="predmeti-container">
-      <button onClick={() => setIsFormOpen(true)}>Dodaj novi predmet</button>
- 
+      <button onClick={() => setIsFormOpen(true)}>Dodaj novi predmet</button> 
+
       {isFormOpen && (
         <div className="modal">
           <form onSubmit={handleSubmit}>
@@ -191,7 +255,61 @@ function Profesor() {
           </form>
         </div>
       )}
-
+ {isGradeModalOpen && (
+        <div className="modal">
+          <form onSubmit={handleSubmitGrade}>
+            <div>
+              <label>Student:</label>
+              <select
+                name="student_id"
+                value={gradeFormData.student_id}
+                onChange={handleGradeFormChange}
+                required
+              >
+                <option value="">Izaberite studenta</option>
+                {students.map((student) => (
+                  <option key={student.id} value={student.id}>
+                    {student.ime} {student.prezime}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>Ocena:</label>
+              <input
+                type="number"
+                name="ocena"
+                value={gradeFormData.ocena}
+                onChange={handleGradeFormChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Datum:</label>
+              <input
+                type="date"
+                name="datum"
+                value={gradeFormData.datum}
+                onChange={handleGradeFormChange}
+                required
+              />
+            </div>
+            <div>
+              <label>Opisna ocena:</label>
+              <input
+                type="text"
+                name="opisnaOcena"
+                value={gradeFormData.opisnaOcena}
+                onChange={handleGradeFormChange}
+              />
+            </div>
+            <button type="submit">Unesi ocenu</button>
+            <button type="button" onClick={() => setIsGradeModalOpen(false)}>
+              Zatvori
+            </button>
+          </form>
+        </div>
+      )}
       <h1>Moji predmeti:</h1>
       <table className="predmeti-table">
         <thead>
@@ -200,6 +318,7 @@ function Profesor() {
             <th>Naziv</th>
             <th>Akcije</th>
             <th>Obriši</th>
+            <th>Unesi ocene</th>
           </tr>
         </thead>
         <tbody>
@@ -213,6 +332,9 @@ function Profesor() {
               </td>
               <td>
                 <button onClick={() => handleDeleteClick(predmet.id)}>Obriši</button>
+              </td>
+              <td>
+                <button onClick={() => openGradeModal(predmet.id)}>Unesi ocene</button> {/* Button to open the grade modal for this predmet */}
               </td>
             </tr>
           ))}
