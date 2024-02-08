@@ -4,6 +4,7 @@ potrebno je prvo pokrenuti laravel aplikaciju, a zatim i react aplikaciju
 Koraci
 1. Preuzeti projekat i otvoriti ga u VS Code 
 2. Pokretanje Laravel aplikacije
+   
    2.1 Otvoriti novi terminal i uneti sledece naredbe:
    
         cd ssLaravel
