@@ -2,33 +2,34 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Univerziteti.css';
 import Kartica from './Kartica';
-
+import { useQuery } from 'react-query';
 function Univerziteti() {
-    const [univerziteti, setUniverziteti] = useState([]);
-    const [trenutnaStranica, setTrenutnaStranica] = useState(1);
-    const [univerzitetaPoStranici] = useState(9);
-    const ukupnoStranica = Math.ceil(univerziteti.length / univerzitetaPoStranici);
-    const [trenutnaDrzava, setTrenutnaDrzava] = useState('');
-  useEffect(() => {
-    const fetchUniverziteti = async () => {
-      try {
-        const response = await axios.get('http://universities.hipolabs.com/search');
-        setUniverziteti(response.data);
-      } catch (error) {
-        console.error('Greška prilikom dohvatanja podataka o univerzitetima', error);
-      }
-    };
+  const [trenutnaStranica, setTrenutnaStranica] = useState(1);
+  const [univerzitetaPoStranici] = useState(9);
+  const [trenutnaDrzava, setTrenutnaDrzava] = useState('');
 
-    fetchUniverziteti();
-  }, []);
-    const filtriraniUniverziteti = trenutnaDrzava 
-    ? univerziteti.filter(uni => uni.country === trenutnaDrzava)
+  const fetchUniverziteti = async () => {
+    const { data } = await axios.get('http://universities.hipolabs.com/search');
+    return data;
+  };
+
+  const { data: univerziteti, isLoading, error } = useQuery('univerziteti', fetchUniverziteti);
+
+  if (isLoading) return 'Učitavanje...';
+  if (error) return 'Došlo je do greške prilikom dohvatanja podataka';
+
+  const filtriraniUniverziteti = trenutnaDrzava 
+    ? univerziteti?.filter(uni => uni.country === trenutnaDrzava)
     : univerziteti;
-   
-    const trenutniUniverziteti = filtriraniUniverziteti.slice(
-      (trenutnaStranica - 1) * univerzitetaPoStranici,
-      trenutnaStranica * univerzitetaPoStranici
+
+  const ukupnoStranica = Math.ceil(filtriraniUniverziteti?.length / univerzitetaPoStranici);
+
+  const trenutniUniverziteti = filtriraniUniverziteti?.slice(
+    (trenutnaStranica - 1) * univerzitetaPoStranici,
+    trenutnaStranica * univerzitetaPoStranici
   );
+
+
     const promeniStranicu = brojStranice => {
         setTrenutnaStranica(brojStranice);
     };
